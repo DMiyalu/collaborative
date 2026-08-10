@@ -8,7 +8,7 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../lib/firebase/firebaseClient';
 import { COLLECTIONS } from '../../domain/collaborative';
 
@@ -43,20 +43,25 @@ export function signInWithEmail({ email, password }) {
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
   const credential = await signInWithPopup(auth, provider);
+  const userReference = doc(db, COLLECTIONS.users, credential.user.uid);
+  const userSnapshot = await getDoc(userReference);
 
-  await setDoc(
-    doc(db, COLLECTIONS.users, credential.user.uid),
-    {
+  if (userSnapshot.exists()) {
+    await updateDoc(userReference, {
+      updatedAt: serverTimestamp(),
+    });
+  } else {
+    await setDoc(userReference, {
       id: credential.user.uid,
       email: credential.user.email,
       displayName: credential.user.displayName || '',
       photoURL: credential.user.photoURL || '',
       onboardingCompleted: false,
       intents: [],
+      createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-    },
-    { merge: true },
-  );
+    });
+  }
 
   return credential.user;
 }

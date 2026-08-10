@@ -8,6 +8,7 @@ import {
   canConfirmCollaboration,
   canOpenMessagingChannel,
   canUserApplyToOpportunity,
+  getOnboardingNextStep,
   isActiveRequest,
 } from './collaborative';
 
@@ -105,5 +106,14 @@ describe('Collaborative domain rules', () => {
       createdAt: null,
       readAt: null,
     });
+  });
+
+  test('recommends the right next onboarding step from selected intents', () => {
+    expect(getOnboardingNextStep(['MOVE_IMMEDIATELY', 'HAS_SKILLS'])).toBe(
+      'CONTACT_COLLABORATIVE_TEAM',
+    );
+    expect(getOnboardingNextStep(['HAS_SKILLS'])).toBe('CREATE_TALENT_PROFILE');
+    expect(getOnboardingNextStep(['HAS_IDEA'])).toBe('CREATE_PROJECT');
+    expect(getOnboardingNextStep([])).toBe('DISCOVER');
   });
 });

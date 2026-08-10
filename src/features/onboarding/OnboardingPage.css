@@ -1,0 +1,204 @@
+:root {
+  --onboarding-navy: #071127;
+  --onboarding-blue: #302cff;
+  --onboarding-orange: #ff5a00;
+  --onboarding-muted: #5f6f8d;
+  --onboarding-border: #dbe1ea;
+  --onboarding-surface: #ffffff;
+  --onboarding-danger: #c53232;
+  --onboarding-success: #137a47;
+}
+
+.onboarding-shell {
+  align-items: center;
+  background:
+    radial-gradient(circle at 48% 0%, rgba(48, 44, 255, 0.08), transparent 28rem),
+    #ffffff;
+  color: var(--onboarding-navy);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.75rem 1rem;
+}
+
+.onboarding-panel {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 43rem);
+}
+
+.onboarding-logo {
+  height: 3.25rem;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  width: 5.6rem;
+}
+
+.onboarding-kicker {
+  background: rgba(255, 90, 0, 0.08);
+  border: 1px solid rgba(255, 90, 0, 0.16);
+  border-radius: 999px;
+  color: #b84600;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.7rem;
+}
+
+.onboarding-header {
+  margin-bottom: 1.55rem;
+  text-align: center;
+  width: min(100%, 35rem);
+}
+
+.onboarding-header h1 {
+  font-size: clamp(1.65rem, 4vw, 2.15rem);
+  letter-spacing: 0;
+  line-height: 1.12;
+  margin: 0 0 0.55rem;
+}
+
+.onboarding-header p {
+  color: var(--onboarding-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.onboarding-form {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+.intent-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.intent-card {
+  align-items: flex-start;
+  background: var(--onboarding-surface);
+  border: 1px solid var(--onboarding-border);
+  border-radius: 0.65rem;
+  color: var(--onboarding-navy);
+  cursor: pointer;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+  min-height: 7rem;
+  padding: 0.95rem;
+  text-align: left;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.intent-card:hover {
+  border-color: rgba(48, 44, 255, 0.35);
+  box-shadow: 0 0.75rem 1.6rem rgba(7, 17, 39, 0.08);
+  transform: translateY(-1px);
+}
+
+.intent-card-selected {
+  background: rgba(48, 44, 255, 0.04);
+  border-color: var(--onboarding-blue);
+  box-shadow: 0 0 0 3px rgba(48, 44, 255, 0.1);
+}
+
+.intent-check {
+  align-items: center;
+  border: 1px solid var(--onboarding-border);
+  border-radius: 0.35rem;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 900;
+  height: 1.2rem;
+  justify-content: center;
+  margin-top: 0.1rem;
+  width: 1.2rem;
+}
+
+.intent-card-selected .intent-check {
+  background: var(--onboarding-blue);
+  border-color: var(--onboarding-blue);
+}
+
+.intent-content {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.intent-content strong {
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.intent-content span {
+  color: var(--onboarding-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.onboarding-status {
+  border-radius: 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+}
+
+.onboarding-status-error {
+  background: rgba(197, 50, 50, 0.08);
+  color: var(--onboarding-danger);
+}
+
+.onboarding-status-success {
+  background: rgba(19, 122, 71, 0.08);
+  color: var(--onboarding-success);
+}
+
+.onboarding-primary {
+  align-items: center;
+  background: var(--onboarding-blue);
+  border: 1px solid var(--onboarding-blue);
+  border-radius: 0.45rem;
+  box-shadow: 0 0.65rem 1.25rem rgba(48, 44, 255, 0.14);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  justify-content: center;
+  justify-self: center;
+  min-height: 2.9rem;
+  padding: 0 1.5rem;
+  width: min(100%, 16rem);
+}
+
+.onboarding-primary:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+@media (max-width: 42rem) {
+  .onboarding-shell {
+    align-items: flex-start;
+    padding-top: 1.35rem;
+  }
+
+  .intent-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intent-card {
+    min-height: 0;
+  }
+}

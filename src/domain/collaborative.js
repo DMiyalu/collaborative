@@ -24,6 +24,33 @@ export const USER_INTENTS = Object.freeze({
   moveImmediately: 'MOVE_IMMEDIATELY',
 });
 
+export const USER_INTENT_OPTIONS = Object.freeze([
+  {
+    value: USER_INTENTS.hasIdea,
+    title: "J'ai une idée",
+    description: 'Trouver les bonnes personnes pour cadrer, construire et lancer un projet.',
+    nextStep: 'CREATE_PROJECT',
+  },
+  {
+    value: USER_INTENTS.hasSkills,
+    title: "J'ai des compétences",
+    description: 'Créer un profil talent et découvrir des projets auxquels contribuer.',
+    nextStep: 'CREATE_TALENT_PROFILE',
+  },
+  {
+    value: USER_INTENTS.hasProduct,
+    title: "J'ai déjà un produit",
+    description: 'Rencontrer des profils capables de faire grandir un produit existant.',
+    nextStep: 'CREATE_PROJECT',
+  },
+  {
+    value: USER_INTENTS.moveImmediately,
+    title: 'Je veux avancer immédiatement',
+    description: "Parler à l'équipe Collaborative pour cadrer ou exécuter plus vite.",
+    nextStep: 'CONTACT_COLLABORATIVE_TEAM',
+  },
+]);
+
 export const PROJECT_STAGES = Object.freeze({
   idea: 'IDEA',
   problemValidated: 'PROBLEM_VALIDATED',
@@ -151,4 +178,20 @@ export function buildNotification({ recipientId, type, actorId, entityId, payloa
     createdAt: null,
     readAt: null,
   };
+}
+
+export function getOnboardingNextStep(intents = []) {
+  if (intents.includes(USER_INTENTS.moveImmediately)) {
+    return 'CONTACT_COLLABORATIVE_TEAM';
+  }
+
+  if (intents.includes(USER_INTENTS.hasSkills)) {
+    return 'CREATE_TALENT_PROFILE';
+  }
+
+  if (intents.includes(USER_INTENTS.hasIdea) || intents.includes(USER_INTENTS.hasProduct)) {
+    return 'CREATE_PROJECT';
+  }
+
+  return 'DISCOVER';
 }

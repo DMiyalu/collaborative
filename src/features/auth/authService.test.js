@@ -11,8 +11,10 @@ jest.mock('firebase/auth', () => ({
 
 jest.mock('firebase/firestore', () => ({
   doc: jest.fn((db, collection, id) => ({ db, collection, id })),
+  getDoc: jest.fn(),
   serverTimestamp: jest.fn(() => 'SERVER_TIMESTAMP'),
   setDoc: jest.fn(),
+  updateDoc: jest.fn(),
 }));
 
 jest.mock('../../lib/firebase/firebaseClient', () => ({
@@ -28,7 +30,7 @@ const {
   signOut,
   updateProfile,
 } = require('firebase/auth');
-const { doc, serverTimestamp, setDoc } = require('firebase/firestore');
+const { doc, getDoc, serverTimestamp, setDoc, updateDoc } = require('firebase/firestore');
 const {
   sendResetPasswordEmail,
   signInWithEmail,
@@ -42,6 +44,7 @@ describe('authService', () => {
     jest.clearAllMocks();
     doc.mockImplementation((db, collection, id) => ({ db, collection, id }));
     serverTimestamp.mockReturnValue('SERVER_TIMESTAMP');
+    getDoc.mockResolvedValue({ exists: () => false });
   });
 
   test('creates a Firebase auth user and matching Collaborative user document', async () => {
@@ -117,7 +120,24 @@ describe('authService', () => {
         onboardingCompleted: false,
         intents: [],
       }),
-      { merge: true },
+    );
+  });
+
+  test('does not reset onboarding when an existing Google user signs in', async () => {
+    getDoc.mockResolvedValue({ exists: () => true });
+    signInWithPopup.mockResolvedValue({
+      user: {
+        uid: 'google-user-1',
+        email: 'google@example.com',
+      },
+    });
+
+    await signInWithGoogle();
+
+    expect(setDoc).not.toHaveBeenCalled();
+    expect(updateDoc).toHaveBeenCalledWith(
+      { db: 'DB', collection: 'users', id: 'google-user-1' },
+      { updatedAt: 'SERVER_TIMESTAMP' },
     );
   });
 });
