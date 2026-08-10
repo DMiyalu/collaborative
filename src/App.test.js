@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('./features/auth/authService', () => ({
+  sendResetPasswordEmail: jest.fn(),
+  signInWithEmail: jest.fn(),
+  signInWithGoogle: jest.fn(),
+  signUpWithEmail: jest.fn(),
+}));
+
+test('renders the login page by default', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /se connecter/i })).toBeInTheDocument();
 });
