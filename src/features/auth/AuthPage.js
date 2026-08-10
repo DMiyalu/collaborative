@@ -80,23 +80,47 @@ function EyeIcon() {
 function getFirebaseErrorMessage(error) {
   const code = error?.code || '';
 
-  if (code.includes('auth/invalid-credential')) {
-    return 'Email ou mot de passe incorrect.';
+  if (code.includes('auth/invalid-credential') || code.includes('auth/wrong-password')) {
+    return 'Email ou mot de passe incorrect. Vérifie tes identifiants puis réessaie.';
   }
 
   if (code.includes('auth/email-already-in-use')) {
-    return 'Cet email est déjà utilisé.';
+    return 'Cet email a déjà un compte. Connecte-toi avec cet email ou utilise la récupération de mot de passe.';
+  }
+
+  if (code.includes('auth/user-not-found')) {
+    return 'Aucun compte ne correspond à cet email. Tu peux créer un compte si tu es nouveau sur Collaborative.';
+  }
+
+  if (code.includes('auth/invalid-email')) {
+    return 'Adresse email invalide. Vérifie le format, par exemple nom@domaine.com.';
   }
 
   if (code.includes('auth/weak-password')) {
-    return 'Le mot de passe doit contenir au moins 6 caractères.';
+    return 'Mot de passe trop court. Utilise au moins 6 caractères pour sécuriser ton compte.';
+  }
+
+  if (code.includes('auth/too-many-requests')) {
+    return 'Trop de tentatives en peu de temps. Patiente quelques minutes avant de réessayer.';
+  }
+
+  if (code.includes('auth/network-request-failed')) {
+    return 'Connexion impossible pour le moment. Vérifie ta connexion internet puis réessaie.';
   }
 
   if (code.includes('auth/popup-closed-by-user')) {
-    return 'La connexion Google a été fermée avant la fin.';
+    return 'La connexion Google a été fermée avant la fin. Relance Google pour terminer la connexion.';
   }
 
-  return 'Une erreur est survenue. Réessaie dans un instant.';
+  if (code.includes('auth/popup-blocked')) {
+    return 'La fenêtre Google a été bloquée par le navigateur. Autorise les popups pour continuer.';
+  }
+
+  if (code.includes('auth/cancelled-popup-request')) {
+    return 'Une connexion Google est déjà en cours. Termine-la ou relance l’action.';
+  }
+
+  return 'Une erreur est survenue. Réessaie dans un instant ou contacte l’équipe Collaborative si le problème continue.';
 }
 
 export default function AuthPage() {
