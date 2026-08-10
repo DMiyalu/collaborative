@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import AuthPage from './features/auth/AuthPage';
 import { signOutUser, subscribeToAuthState } from './features/auth/authService';
+import LandingPage from './features/landing/LandingPage';
 import OnboardingPage from './features/onboarding/OnboardingPage';
 import { subscribeToUserDocument } from './features/users/userService';
 
@@ -48,6 +49,7 @@ function App() {
   const [userDoc, setUserDoc] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
+  const [isAuthRequested, setIsAuthRequested] = useState(false);
 
   useEffect(() => {
     return subscribeToAuthState((nextUser) => {
@@ -75,7 +77,7 @@ function App() {
   }
 
   if (!authUser) {
-    return <AuthPage />;
+    return isAuthRequested ? <AuthPage /> : <LandingPage onOpenAuth={() => setIsAuthRequested(true)} />;
   }
 
   if (!userDoc?.onboardingCompleted) {

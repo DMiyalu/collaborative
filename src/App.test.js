@@ -25,9 +25,11 @@ describe('App', () => {
     });
   });
 
-  test('renders the login page when signed out', () => {
+  test('renders the landing page when signed out', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: /se connecter/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: /les projets rencontrent/i }),
+    ).toBeInTheDocument();
   });
 
   test('renders onboarding for a signed in user who has not completed it', async () => {
