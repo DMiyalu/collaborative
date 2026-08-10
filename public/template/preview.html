@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collaborative — Les projets rencontrent les compétences</title>
+  <meta name="description" content="Collaborative est le réseau où les projets rencontrent les compétences pour construire ensemble." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --surface:#ffffff;
+      --ink:#0a1020;
+      --muted:#667085;
+      --line:#e7e9f0;
+      --navy:#071127;
+      --orange:#ff5a00;
+      --blue:#3d3dff;
+      --violet:#6c43ff;
+      --cyan:#12c2d8;
+      --green:#18b67a;
+      --shadow-sm:0 8px 28px rgba(17,24,39,.06);
+      --shadow-md:0 24px 70px rgba(20,28,52,.10);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 12% 3%,rgba(255,90,0,.05),transparent 22%),
+        radial-gradient(circle at 88% 2%,rgba(61,61,255,.07),transparent 25%),
+        var(--bg);
+      color:var(--ink);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .container{width:min(1200px,calc(100% - 40px));margin-inline:auto}
+    .nav-wrap{position:sticky;top:14px;z-index:100;padding:14px 0 0}
+    .nav{
+      min-height:66px;
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+      padding:9px 10px 9px 16px;
+      border:1px solid rgba(225,228,237,.9);
+      background:rgba(255,255,255,.84);
+      backdrop-filter:blur(18px);
+      border-radius:18px;
+      box-shadow:0 12px 34px rgba(15,23,42,.06);
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-family:Manrope,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.035em}
+    .logo-icon{width:38px;height:28px;position:relative;display:inline-block}
+    .logo-icon:before,.logo-icon:after{content:"";position:absolute;top:0;width:28px;height:28px;border-radius:50%}
+    .logo-icon:before{left:0;background:linear-gradient(145deg,#ff7b1b,var(--orange))}
+    .logo-icon:after{right:0;background:linear-gradient(145deg,#5555ff,#2929dc)}
+    .logo-spark{
+      position:absolute;z-index:4;left:50%;top:50%;width:8px;height:8px;
+      background:#fff;transform:translate(-50%,-50%) rotate(45deg);
+      box-shadow:0 0 0 2px rgba(255,255,255,.3)
+    }
+    .nav-links{display:flex;gap:28px;align-items:center;color:#545f74;font-size:13px;font-weight:600}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-actions{display:flex;gap:8px;align-items:center}
+    .btn{
+      border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:44px;padding:0 16px;border-radius:12px;font-weight:700;font-size:13px;
+      transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-dark{background:var(--navy);color:#fff;box-shadow:0 10px 24px rgba(7,17,39,.16)}
+    .btn-soft{background:#fff;color:var(--ink);border:1px solid var(--line)}
+    .btn-white{background:#fff;color:var(--navy)}
+    .hero{padding:92px 0 58px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1fr .96fr;gap:54px;align-items:center}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;border:1px solid #e5e7ef;background:rgba(255,255,255,.82);
+      padding:8px 11px;border-radius:999px;font-size:12px;font-weight:700;color:#4b5568;box-shadow:var(--shadow-sm)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--violet))}
+    h1,h2,h3{font-family:Manrope,Inter,sans-serif}
+    h1{
+      margin:20px 0 20px;font-size:clamp(46px,6vw,80px);line-height:.99;letter-spacing:-.062em;
+      color:var(--navy);max-width:780px
+    }
+    .grad{
+      background:linear-gradient(93deg,var(--orange) 0%,var(--violet) 47%,var(--blue) 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    .hero-copy{font-size:18px;line-height:1.7;color:#596579;max-width:690px;margin:0 0 28px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .micro{margin-top:18px;font-size:12px;color:#8a93a5;display:flex;align-items:center;gap:9px}
+    .micro:before{content:"";width:28px;height:1px;background:#cfd5df}
+    .product-stage{position:relative;min-height:545px}
+    .orb{
+      position:absolute;border-radius:50%;filter:blur(1px);opacity:.9
+    }
+    .orb.one{width:190px;height:190px;right:12px;top:14px;background:radial-gradient(circle at 35% 35%,#7a62ff,#3434e7)}
+    .orb.two{width:130px;height:130px;left:28px;bottom:48px;background:radial-gradient(circle at 30% 30%,#ff9c58,#ff5a00)}
+    .panel{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:min(100%,510px);background:rgba(255,255,255,.94);border:1px solid rgba(225,228,238,.9);
+      border-radius:28px;padding:18px;box-shadow:0 34px 90px rgba(18,25,52,.17);backdrop-filter:blur(20px)
+    }
+    .panel-top{display:flex;align-items:center;justify-content:space-between;padding:3px 4px 14px}
+    .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:#8a93a6}
+    .status{font-size:11px;font-weight:700;color:#14845d;background:#eafaf3;padding:6px 9px;border-radius:999px}
+    .profile-feature{background:#0c1530;border-radius:20px;padding:22px;color:#fff;position:relative;overflow:hidden}
+    .profile-feature:after{
+      content:"";position:absolute;width:210px;height:210px;right:-80px;top:-90px;border-radius:50%;
+      background:radial-gradient(circle,rgba(93,79,255,.45),transparent 68%)
+    }
+    .pf-head{display:flex;align-items:center;gap:13px;position:relative;z-index:2}
+    .avatar{
+      width:54px;height:54px;border-radius:50%;background:
+        radial-gradient(circle at 50% 33%,#fac3a3 0 16%,transparent 17%),
+        radial-gradient(circle at 50% 75%,#4f46e5 0 29%,transparent 30%),
+        linear-gradient(135deg,#ffd0b2,#5964ff)
+    }
+    .pf-name{font-weight:800;font-size:16px}.pf-role{color:#b7c0d3;font-size:12px;margin-top:3px}
+    .compat{margin-left:auto;text-align:right;position:relative;z-index:2}
+    .compat b{font-size:18px}.compat small{display:block;color:#9da8bd;font-size:10px;margin-top:2px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0;position:relative;z-index:2}
+    .tag{font-size:11px;font-weight:700;padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.09);color:#dfe4ef;border:1px solid rgba(255,255,255,.07)}
+    .pf-actions{display:flex;gap:8px;position:relative;z-index:2}
+    .small-btn{flex:1;border-radius:11px;padding:10px 12px;font-size:11px;font-weight:800;text-align:center}
+    .small-btn.primary{background:#fff;color:#111827}.small-btn.ghost{background:rgba(255,255,255,.07);color:#fff}
+    .mini-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .mini-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+    .mini-label{font-size:10px;color:#8d96a6;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .mini-value{font-size:14px;font-weight:800;margin-top:7px}.mini-sub{font-size:11px;color:#737d90;margin-top:4px}
+    .float-card{
+      position:absolute;background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow-md);padding:13px 15px
+    }
+    .float-card.f1{right:-4px;bottom:74px}.float-card.f2{left:-5px;top:85px}
+    .float-title{font-size:11px;color:#8a93a5;font-weight:700}.float-value{font-size:13px;font-weight:800;margin-top:4px}
+    .section{padding:78px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:34px}
+    .section-head .copy{max-width:680px}
+    .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:var(--orange)}
+    h2{font-size:clamp(34px,4vw,52px);line-height:1.05;letter-spacing:-.045em;margin:9px 0 10px;color:var(--navy)}
+    .lead{color:#667085;font-size:16px;line-height:1.7;margin:0;max-width:690px}
+    .intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .intent{
+      min-height:245px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;
+      box-shadow:0 6px 20px rgba(16,24,40,.03);transition:.2s ease;position:relative;overflow:hidden
+    }
+    .intent:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#d9dcea}
+    .intent:after{content:"";position:absolute;width:120px;height:120px;right:-55px;bottom:-55px;border-radius:50%;background:rgba(61,61,255,.04)}
+    .intent-top{display:flex;align-items:center;justify-content:space-between}
+    .intent-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:19px}
+    .icon-orange{background:#fff2ea}.icon-blue{background:#eeeeff}.icon-violet{background:#f3efff}.icon-cyan{background:#eafafa}
+    .intent-arrow{font-size:18px;color:#a4acba}
+    .intent h3{font-size:18px;letter-spacing:-.02em;margin:34px 0 9px}
+    .intent p{font-size:13px;line-height:1.65;color:#6d7688;margin:0}
+    .platform{
+      background:
+        radial-gradient(circle at 13% 18%,rgba(255,90,0,.12),transparent 25%),
+        radial-gradient(circle at 86% 15%,rgba(61,61,255,.18),transparent 29%),
+        linear-gradient(145deg,#071127,#0c1631 58%,#111c3d);
+      color:#fff;border-radius:34px;margin:34px auto;width:min(1240px,calc(100% - 28px));padding:70px 0;overflow:hidden
+    }
+    .platform h2{color:#fff}.platform .lead{color:#b2bdcf}
+    .journey{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:34px}
+    .journey-card{padding:18px;border-radius:17px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);min-height:190px}
+    .journey-no{font-size:10px;font-weight:800;color:#93a0b8;letter-spacing:.1em}
+    .journey-card h3{font-size:17px;margin:34px 0 8px;color:white}
+    .journey-card p{font-size:12px;line-height:1.6;color:#aeb8ca;margin:0}
+    .journey-line{margin-top:38px;height:1px;background:linear-gradient(90deg,var(--orange),var(--violet),var(--blue));opacity:.7}
+    .op-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .op-card{
+      background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 6px 18px rgba(16,24,40,.03);
+      transition:.2s ease
+    }
+    .op-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .op-cover{height:132px;border-radius:15px;position:relative;overflow:hidden;padding:14px;display:flex;align-items:flex-end}
+    .cover-1{background:linear-gradient(145deg,#edf7ff,#e8eaff)}
+    .cover-2{background:linear-gradient(145deg,#fff0e6,#f7eaff)}
+    .cover-3{background:linear-gradient(145deg,#e9fbf5,#e8f1ff)}
+    .project-orb{position:absolute;width:100px;height:100px;border-radius:50%;right:-18px;top:-22px;filter:blur(.2px)}
+    .cover-1 .project-orb{background:linear-gradient(145deg,#5555ff,#8b5cf6)}
+    .cover-2 .project-orb{background:linear-gradient(145deg,#ff8b47,#ff5a00)}
+    .cover-3 .project-orb{background:linear-gradient(145deg,#20c997,#12a7d8)}
+    .sector{position:relative;z-index:2;background:rgba(255,255,255,.78);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.7);padding:6px 9px;border-radius:999px;font-size:10px;font-weight:800}
+    .op-card h3{font-size:17px;line-height:1.35;margin:16px 0 8px}
+    .op-card p{font-size:12px;line-height:1.6;color:#70798b;margin:0}
+    .op-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+    .meta-cell{background:#f8f9fc;border-radius:11px;padding:10px}
+    .meta-cell small{display:block;font-size:9px;color:#929bad;text-transform:uppercase;font-weight:800;letter-spacing:.07em}
+    .meta-cell b{display:block;font-size:11px;margin-top:5px}
+    .op-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:13px}
+    .people{display:flex}.person{width:25px;height:25px;border-radius:50%;border:2px solid white;margin-left:-5px;background:linear-gradient(135deg,#ffc7aa,#6366f1)}.person:first-child{margin-left:0}
+    .op-link{font-size:11px;font-weight:800;color:var(--blue)}
+    .team-panel{
+      display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+      padding:42px;border:1px solid #dedff0;background:linear-gradient(135deg,#fff 0%,#fbfbff 55%,#f3f1ff 100%);
+      border-radius:28px;box-shadow:var(--shadow-sm)
+    }
+    .team-visual{background:#0a1330;border-radius:22px;padding:20px;min-height:330px;position:relative;overflow:hidden}
+    .team-visual:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(61,61,255,.2);right:-80px;top:-90px}
+    .team-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);color:#dbe1ed;border-radius:999px;padding:7px 10px;font-size:10px;font-weight:700}
+    .workflow{margin-top:34px;display:grid;gap:9px;position:relative;z-index:2}
+    .work-row{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);padding:11px;border-radius:13px}
+    .work-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#fff;color:#111;font-size:15px}
+    .work-name{color:#fff;font-weight:800;font-size:12px}.work-sub{color:#8f9bb1;font-size:10px;margin-top:2px}
+    .work-status{margin-left:auto;color:#8ce3c2;font-size:9px;font-weight:800}
+    .quote{padding:92px 0 80px;text-align:center}
+    .quote p{max-width:950px;margin:0 auto;font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(30px,4.5vw,56px);line-height:1.18;letter-spacing:-.05em;color:var(--navy)}
+    .quote em{font-style:normal;color:var(--orange)}
+    .cta{
+      width:min(1200px,calc(100% - 40px));margin:0 auto 74px;border-radius:28px;padding:48px;
+      background:
+        radial-gradient(circle at 20% 20%,rgba(255,90,0,.35),transparent 30%),
+        radial-gradient(circle at 86% 20%,rgba(61,61,255,.4),transparent 32%),
+        #09122a;
+      color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px
+    }
+    .cta h2{color:white;margin:0 0 10px}.cta p{margin:0;color:#b7c0d1;max-width:650px;line-height:1.6}
+    footer{padding:28px 0 42px;border-top:1px solid var(--line);color:#8b94a5;font-size:12px}
+    .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:980px){
+      .nav-links{display:none}.hero-grid,.team-panel{grid-template-columns:1fr}.product-stage{min-height:500px}
+      .intent-grid,.journey{grid-template-columns:repeat(2,1fr)}.op-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}
+    }
+    @media(max-width:620px){
+      .container{width:min(100% - 24px,1200px)}.nav-wrap{top:6px}.nav{border-radius:14px}.nav-actions .btn-soft{display:none}
+      .hero{padding-top:62px}.hero-actions .btn{width:100%}.product-stage{min-height:455px}.panel{width:100%}
+      .float-card{display:none}.intent-grid,.journey{grid-template-columns:1fr}.section{padding:58px 0}.platform{padding:54px 0;border-radius:24px}
+      .team-panel{padding:22px}.cta{width:calc(100% - 24px);padding:30px 22px;align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="container">
+      <header class="nav">
+        <a class="brand" href="#">
+          <span class="logo-icon"><span class="logo-spark"></span></span>
+          Collaborative
+        </a>
+        <nav class="nav-links">
+          <a href="#fonctionnement">Comment ça marche</a>
+          <a href="#opportunites">Opportunités</a>
+          <a href="#equipe">Équipe Collaborative</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-soft" href="#opportunites">Explorer</a>
+          <a class="btn btn-dark" href="#rejoindre">Rejoindre</a>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill"><span class="dot"></span> Le réseau pour celles et ceux qui veulent construire</div>
+          <h1>Les projets rencontrent les <span class="grad">bonnes compétences.</span></h1>
+          <p class="hero-copy">Tu n'as pas besoin d'avoir toutes les compétences pour lancer une idée. Tu as besoin de trouver les bonnes personnes avec qui la construire.</p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#rejoindre">J'ai un projet <span>↗</span></a>
+            <a class="btn btn-soft" href="#rejoindre">J'ai des compétences</a>
+          </div>
+          <div class="micro">Pas un marketplace de freelances. Un réseau pour construire ensemble.</div>
+        </div>
+
+        <div class="product-stage" aria-label="Aperçu de l'expérience Collaborative">
+          <div class="orb one"></div><div class="orb two"></div>
+          <div class="float-card f2"><div class="float-title">Nouveau match</div><div class="float-value">92% compatible ✦</div></div>
+          <div class="float-card f1"><div class="float-title">Projet recherché</div><div class="float-value">Flutter · Fintech</div></div>
+
+          <div class="panel">
+            <div class="panel-top">
+              <div class="eyebrow">Talents recommandés</div>
+              <div class="status">Disponible</div>
+            </div>
+            <div class="profile-feature">
+              <div class="pf-head">
+                <div class="avatar"></div>
+                <div><div class="pf-name">Patrick M.</div><div class="pf-role">Développeur Flutter · Kinshasa</div></div>
+                <div class="compat"><b>92%</b><small>compatibilité</small></div>
+              </div>
+              <div class="tags">
+                <span class="tag">Fintech</span><span class="tag">SaaS</span><span class="tag">Mobilité</span><span class="tag">Co-founder</span>
+              </div>
+              <div class="pf-actions">
+                <div class="small-btn primary">Voir le profil</div>
+                <div class="small-btn ghost">Proposer une collaboration</div>
+              </div>
+            </div>
+            <div class="mini-row">
+              <div class="mini-card"><div class="mini-label">Disponibilité</div><div class="mini-value">10–15h / semaine</div><div class="mini-sub">Soirs & week-ends</div></div>
+              <div class="mini-card"><div class="mini-label">Ouvert à</div><div class="mini-value">Co-build · Equity</div><div class="mini-sub">Projet early-stage</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rejoindre">
+      <div class="container">
+        <div class="section-head">
+          <div class="copy">
+            <div class="kicker">Ton point de départ</div>
+            <h2>Entre par ce que tu as aujourd'hui.</h2>
+            <p class="lead">Collaborative s'adapte à ton parcours : une idée, des compétences, un produit déjà lancé ou simplement l'envie d'avancer rapidement.</p>
+          </div>
+        </div>
+
+        <div class="intent-grid">
+          <article class="intent">
+            <div class="intent-top"><div class="intent-icon icon-orange">💡</div><div class="intent-arrow">↗</div></div>
+            <h3>J'ai une idée</h3>
+            <p>Je cherche des personnes pour la construire et transformer mon intuition en produit.</p>
+          </article>
+          <article class="intent">
+            <div class="intent-top"><div class="intent-icon icon-blue">⚡</div><div class="intent-arrow">↗</div></div>
+            <h3>J'ai des compétences</h3>
+            <p>Je cherche un projet auquel contribuer et des personnes avec qui créer de la valeur.</p>
+          </article>
+          <article class="intent">
+            <div class="intent-top"><div class="intent-icon icon-violet">🚀</div><div class="intent-arrow">↗</div></div>
+            <h3>J'ai déjà un produit</h3>
+            <p>Je cherche des profils pour l'amener plus loin : marché, croissance, produit ou technologie.</p>
+          </article>
+          <article class="intent">
+            <div class="intent-top"><div class="intent-icon icon-cyan">🤝</div><div class="intent-arrow">↗</div></div>
+            <h3>Je veux avancer maintenant</h3>
+            <p>Je travaille directement avec l'équipe Collaborative pour cadrer et lancer mon MVP.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform" id="fonctionnement">
+      <div class="container">
+        <div class="section-head">
+          <div class="copy">
+            <div class="kicker" style="color:#ff8d55">Le parcours Collaborative</div>
+            <h2>Le match n'est que le début.</h2>
+            <p class="lead">La plateforme est pensée pour faire passer les bonnes rencontres vers une collaboration concrète, puis vers un produit réel.</p>
+          </div>
+        </div>
+
+        <div class="journey">
+          <article class="journey-card"><div class="journey-no">01 / RENCONTRER</div><h3>Se découvrir</h3><p>Les profils et projets compatibles apparaissent au bon moment, avec le bon contexte.</p></article>
+          <article class="journey-card"><div class="journey-no">02 / CONSTITUER</div><h3>Former l'équipe</h3><p>Les compétences complémentaires se choisissent et définissent leur mode de collaboration.</p></article>
+          <article class="journey-card"><div class="journey-no">03 / CO-CONSTRUIRE</div><h3>Créer ensemble</h3><p>Produit, tech, design, business et marketing convergent vers un MVP testable.</p></article>
+          <article class="journey-card"><div class="journey-no">04 / LANCER</div><h3>Rencontrer le marché</h3><p>Le produit sort, obtient ses premiers retours et évolue avec de vrais utilisateurs.</p></article>
+        </div>
+        <div class="journey-line"></div>
+      </div>
+    </section>
+
+    <section class="section" id="opportunites">
+      <div class="container">
+        <div class="section-head">
+          <div class="copy">
+            <div class="kicker">Opportunités</div>
+            <h2>Découvre ce qui cherche à naître.</h2>
+            <p class="lead">Une opportunité expose suffisamment pour créer une rencontre — sans obliger le porteur à dévoiler toute son idée.</p>
+          </div>
+          <a class="btn btn-soft" href="#">Voir toutes les opportunités</a>
+        </div>
+
+        <div class="op-grid">
+          <article class="op-card">
+            <div class="op-cover cover-1"><div class="project-orb"></div><span class="sector">HealthTech</span></div>
+            <h3>Recherche développeur mobile + profil marketing</h3>
+            <p>Une solution de suivi entre cabinets médicaux et patients. Prototype initial déjà disponible.</p>
+            <div class="op-meta">
+              <div class="meta-cell"><small>Stade</small><b>Prototype</b></div>
+              <div class="meta-cell"><small>Implication</small><b>10h / semaine</b></div>
+              <div class="meta-cell"><small>Compétences</small><b>Flutter · Growth</b></div>
+              <div class="meta-cell"><small>Lieu</small><b>Kinshasa / Remote</b></div>
+            </div>
+            <div class="op-foot"><div class="people"><span class="person"></span><span class="person"></span><span class="person"></span></div><a class="op-link" href="#">Je veux contribuer →</a></div>
+          </article>
+
+          <article class="op-card">
+            <div class="op-cover cover-2"><div class="project-orb"></div><span class="sector">Fintech</span></div>
+            <h3>Recherche Product + Backend pour cadrer un MVP</h3>
+            <p>Un problème terrain déjà identifié et validé. L'équipe recherche des profils complémentaires pour construire la première version.</p>
+            <div class="op-meta">
+              <div class="meta-cell"><small>Stade</small><b>Idée validée</b></div>
+              <div class="meta-cell"><small>Ouvert à</small><b>Equity</b></div>
+              <div class="meta-cell"><small>Compétences</small><b>Product · Node.js</b></div>
+              <div class="meta-cell"><small>Rythme</small><b>Flexible</b></div>
+            </div>
+            <div class="op-foot"><div class="people"><span class="person"></span><span class="person"></span></div><a class="op-link" href="#">Je veux contribuer →</a></div>
+          </article>
+
+          <article class="op-card">
+            <div class="op-cover cover-3"><div class="project-orb"></div><span class="sector">SaaS</span></div>
+            <h3>Recherche Growth / Business Development</h3>
+            <p>Le produit fonctionne déjà. L'objectif : trouver les premiers clients et affiner le go-to-market.</p>
+            <div class="op-meta">
+              <div class="meta-cell"><small>Stade</small><b>MVP en ligne</b></div>
+              <div class="meta-cell"><small>Objectif</small><b>Premiers clients</b></div>
+              <div class="meta-cell"><small>Compétences</small><b>Growth · Sales</b></div>
+              <div class="meta-cell"><small>Mode</small><b>Co-construction</b></div>
+            </div>
+            <div class="op-foot"><div class="people"><span class="person"></span><span class="person"></span><span class="person"></span></div><a class="op-link" href="#">Je veux contribuer →</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="equipe">
+      <div class="container">
+        <div class="team-panel">
+          <div>
+            <div class="kicker">Équipe Collaborative</div>
+            <h2>Tu veux construire sans attendre ?</h2>
+            <p class="lead">Passe directement du besoin à l'exécution avec une équipe capable de cadrer, designer, développer et préparer le lancement de ton MVP.</p>
+            <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+              <a class="btn btn-dark" href="#">Parler à Collaborative ↗</a>
+              <a class="btn btn-soft" href="#">Voir notre approche</a>
+            </div>
+          </div>
+          <div class="team-visual">
+            <span class="team-chip">✦ Squad prête à démarrer</span>
+            <div class="workflow">
+              <div class="work-row"><div class="work-icon">◈</div><div><div class="work-name">Product & stratégie</div><div class="work-sub">Cadrage · MVP · Priorités</div></div><span class="work-status">READY</span></div>
+              <div class="work-row"><div class="work-icon">✦</div><div><div class="work-name">UX / UI Design</div><div class="work-sub">Parcours · Prototype · Design system</div></div><span class="work-status">READY</span></div>
+              <div class="work-row"><div class="work-icon">⌘</div><div><div class="work-name">Développement</div><div class="work-sub">Web · Mobile · Backend</div></div><span class="work-status">READY</span></div>
+              <div class="work-row"><div class="work-icon">↗</div><div><div class="work-name">Marketing & marché</div><div class="work-sub">Lancement · Acquisition · Feedback</div></div><span class="work-status">READY</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote">
+      <div class="container">
+        <p>Le véritable objet échangé sur Collaborative, c'est <em>l'opportunité de construire ensemble.</em></p>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div>
+        <h2>Une idée. Une compétence. Une rencontre.</h2>
+        <p>Crée ton profil, publie une opportunité ou découvre les projets auxquels tu pourrais contribuer.</p>
+      </div>
+      <a class="btn btn-white" href="#">Rejoindre Collaborative ↗</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <span>© 2026 Collaborative</span>
+      <span>Kinshasa · Remote · Build together</span>
+    </div>
+  </footer>
+</body>
+</html>
